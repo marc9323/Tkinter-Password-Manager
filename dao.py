@@ -12,22 +12,23 @@ and for reading the saved login from and writing a report to text files.
 """
 
 from sqlite3 import *
-from collections import namedtuple
+from model import UserTuple, LinkTuple
 from encryption import Encryption
 from datetime import date
 
-
+#  named constant for config file
+#  this file simply stores a user id #
 CONFIG_FILE = 'pwm-config.txt'
-
-#  namedtuple is a factory function which subclasses named tuple.
-UserTuple = namedtuple('User', ['id', 'email', 'password'])
-LinkTuple = namedtuple('Link', ['id', 'user_id', 'site_name', 'username', 'url', 'note', 'password', 'security', 'email'])
 
 
 class DataAccessClass:
     """ This class sets up a database connection and contains methods
-    for reading and writing to the database and closing the connection """
+    for reading and writing to the database and closing the connection.
+    It also contains methods for reading/writing to the config file which
+    stores last saved login user id and for generating a report containing
+    all of the web accounts data for a single user"""
     def __init__(self):
+        # eliminate
         self.__currentEntryId = 0
         self.encryption = Encryption()
         try:
@@ -65,14 +66,6 @@ class DataAccessClass:
         if len(data) == 0:
             return False
         return True
-
-    # def getUserByEmailAndPassword(self, email, password):
-    #     #  hash the password
-    #     sql = f"SELECT * FROM users WHERE email = '{email}' AND password = '{password}'"
-    #     self.cursor.execute(sql)
-    #     user = self.cursor.fetchone()
-    #     user = UserTuple(*user)
-    #     return user
 
     def getUserCheckPw(self, email, password):
         # get the user info by email
@@ -144,9 +137,7 @@ class DataAccessClass:
 
     #  sorts links in alphabetical order, outputs a report to text file
     def printReport(self, principalEmail, links):
-        #  the lambda acts as an anonymous function which simply returns link.site_name
-        #  for us to sort by.
-        links = sorted(links, key=lambda link: link.site_name)
+        #  links are already sorted in alphabetical order
         #  get today's date
         today = date.today()
         #  parse it to month day year
@@ -167,6 +158,7 @@ class DataAccessClass:
                              f"Note: {link.note}\n\n")
             report.close()
 
+    # do I need this - it's in the model - no.
     @property
     def currentEntryId(self):
         return self.__currentEntryId

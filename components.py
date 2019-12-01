@@ -71,11 +71,12 @@ class SiteListBoxFrame(LabelFrame):
         # self.master = master
         self.siteListBox = Listbox(self, width=25)
         self.siteListBox.config(border=2, relief='sunken')
-        self.siteListBox.grid(row=0, column=0, rowspan=2, sticky='nsew')
+
 
         self.listScroll = Scrollbar(self, orient=VERTICAL,
                                command=self.siteListBox.yview)
-        self.listScroll.grid(row=1, column=1, sticky='nsw', rowspan=2)
+        self.listScroll.grid(row=0, column=1, sticky='nsw', rowspan=3)
+        self.siteListBox.grid(row=0, column=0, rowspan=2, sticky='nsew')
         self.siteListBox['yscrollcommand'] = self.listScroll.set
 
         self.siteListBoxDeleteButton = Button(self, text='Delete Entry')

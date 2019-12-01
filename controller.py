@@ -8,6 +8,7 @@ Term Project - Tkinter Password Manager Application
 Module: controller.py
 consists of the main controller and entry/exit point for the application.
 """
+
 from dao import *
 from model import *
 from view import *
@@ -40,8 +41,8 @@ class Controller:
         #  bind view widgets to controller methods
         self.view.siteListBoxFrame.siteListBox.bind('<<ListboxSelect>>', self.onListBoxSelect)
         self.view.menubar.entryconfigure(1, command=self.printReport)  #  print report menu option
-        self.view.menubar.entryconfigure(2, command=self.help)
-        self.view.menubar.entryconfigure(3, command=self.exit)
+        self.view.menubar.entryconfigure(2, command=self.help)  #  help menu option
+        self.view.menubar.entryconfigure(3, command=self.exit)  #  exit menu option
         self.view.addSiteFrame.updateEntryButton['command'] = self.updateLink
         self.view.addSiteFrame.addEntryButton['command'] = self.addLink
         self.view.addSiteFrame.clearButton['command'] = self.view.clearForm
@@ -75,6 +76,7 @@ class Controller:
             # if user == False:  ## if not user
             if not user:
                 messagebox.showwarning('Login Failed', 'Enter a valid password.')
+                self.view.setLoginFieldsRed()
                 return
         except TypeError:
             messagebox.showwarning('Login Failure', 'Enter a valid username (email) and password.')
@@ -130,7 +132,7 @@ class Controller:
                 self.view.registerFrame.usernameEntry.delete(0, END)
                 self.view.setRegisterUsernameWhite()
                 #  set current user label and clear GUI
-                self.view.setCurrentUserLabel(self.model.principal.email)
+                self.view.setCurrentUserLabel()
                 self.view.clearListBox()
                 self.view.clearForm()
                 self.view.clearLogin()
@@ -229,11 +231,12 @@ class Controller:
             self.dao.printReport(self.model.principal.email, self.model.links)
             messagebox.showinfo('SUCCESS!', 'To view the report open text file: password-report.txt')
 
+    #  uses webbrowser module to open local html help file
     def help(self):
         wb.open("pwm-help.html")
 
+    #  use a regular expression to test if an email address was entered
     def checkEmail(self, email):
-        #  use a regular expression to test if an email address was entered
         regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
         if re.search(regex, email):
             return True

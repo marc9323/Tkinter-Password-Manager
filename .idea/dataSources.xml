@@ -7,5 +7,11 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/pwmdatabase.db</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="db-pwm.db" uuid="012d19c2-5d58-4a18-9946-587a66cea932">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db-pwm.db</jdbc-url>
+    </data-source>
   </component>
 </project>

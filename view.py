@@ -10,8 +10,8 @@ This file consists of the view module for the application.
 Extends Frame.  Here the components are assembled.
 """
 
-from components import *
 from dao import *
+from components import *
 from tkinter import messagebox
 
 class View(Frame):

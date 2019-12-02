@@ -1,37 +1,102 @@
+<!--
+
+Marc Holman
+CIS 2531 - Introduction to Python Programming
+12 / 2 / 2019
+
+Tkinter Password Manager Application Help
+
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Tkinter Password Manager Application Help</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 
-    <h1>Tkinter Password Manager Application Help</h1>
-
-    <p>This application allows multiple users to enter and store information pertaining to web accounts.
-
-        To register, use the 'Registration' box.  Please use an email address for your username and select
-        a password.
-
-        To login, enter your username(email) and password.
-    </p>
+    <div id="container" class="container, border border-dark">
+       <div class="jumbotron">
+          <h1 class="display-4, text-center">Tkinter Password Manager</h1>
+          <p class="lead, text-center">CREATE, READ, UPDATE, AND DELETE WEB ACCOUNT DATA:</p>
+          <hr class="my-4">
+          <p class="text-center">Never forget your password again!</p>
+        </div>
 
     <br /><br />
+
+        <img class="mx-auto d-block" src="pwmpicture.png" width="640" height="480" />
+
     <hr />
-    <br />
-    <address>
-      <p>
-        Marc Holman<br>
-        Lombard<br>
-        College of DuPage<br>
-        Il.
-      </p>
 
-      <ul>
-        <li>Email: marcholman9323@gmail.com</li>
-      </ul>
-    </address>
+    <h3 class="text-center">Tkinter Password Manager Application Help:</h3>
 
+        <ul>
+            <li>This application allows multiple users to enter and store information pertaining to web accounts.</li>
+            <li>To register, use the 'Registration' box.  Please use an email address for your username and select
+            a password.</li>
+            <li>You must use an email address as your username</li>
+            <li>To login, enter your username(email) and password.</li>
+            <li> For convenience you can save your login so the app will open up to your account by checking the 'Save Login' box.</li>
+            <li>When entering web account data please use a unique name for each account.  i.e. for two Gmail accounts
+            use 'Gmail I', 'Gmail II', etc.</li>
+            <li>Hit '<b>Print Report</b>' to output all of your web account data to a text file.</li>
+            <li>The text file, <i>yourname.txt</i>, will be generated in the application directory.</li>
+        </ul>
+
+        <br />
+        <hr />
+
+       <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Web Account Field</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <td>Account Name</td>
+            <td>Name for the account, i.e. Fifth Third Bank, Gmail, etc.  Name must be unique.</td>
+        </tr>
+        <tr>
+            <td>Account Link</td>
+            <td>URL, you can copy/paste this in, i.e. http://www.gmail.com</td>
+        </tr>
+        <tr>
+            <td>Account Username</td>
+            <td>Your username for the account</td>
+        </tr>
+        <tr>
+            <td>Account Email</td>
+            <td>Email associated with the account, i.e. throwaway email used for secondary facebook account</td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td>Password for the account</td>
+        </tr>
+        <tr>
+            <td>Security Questions</td>
+            <td>Answers to security questions, if any, i.e. France, 1942, Smith</td>
+        </tr>
+        <tr>
+            <td>Note</td>
+            <td>Any notes regarding the account, i.e. contact name, billing dates, etc.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br /><br />
+
+    <hr />
+        <p class="text-center">&copy; Marc D. Holman</p>
+        <p class="text-center">12 / 02 / 2019</p>
+    <hr/>
+
+    </div>
 
 </body>
 </html>

@@ -1,3 +1,15 @@
+"""
+Marc D. Holman
+11 / 22 / 2019
+CIS 2531 - Introduction to Python Programming
+
+Term Project - Tkinter Password Manager Application
+
+Module model, contains the data model for the application
+as well as UserTuple and LinkTuple named tuple classes used for
+holding users and web accounts (links).
+
+"""
 
 from collections import namedtuple
 

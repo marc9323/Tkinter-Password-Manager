@@ -157,6 +157,7 @@ class Controller:
                                                     f'YES saves data.  NO clears form.')
 
         if response:  # if yes
+            # TODO:  does the entry already exist?  Is there already an account with the same site_name?
             try:
                 #  saveLink returns the id of the last record, use to set currentEntryId
                 lastRowId = self.dao.saveLink(link, self.model.principal.id)

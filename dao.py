@@ -23,10 +23,10 @@ CONFIG_FILE = 'pwm-config.txt'
 #  named constant for database file which holds users and links (web accounts)
 DATABASE_FILE = 'pwmdatabase.db'
 
-#  decorator will simplify exception handling for all these repetitive db transactions
+#  decorator will simplify exception handling for repetitive db transactions
 #  instead of a try, catch block in each function, use decorator
-#  A database error causes the application to shut down after notifying the user.
-#  and displays the error inside tkinter messagebox
+#  A database error will cause the application to shut down after notifying the user
+#  and displaying the error inside tkinter messagebox
 def db_try_catch(func):
     #  func is the function the decorator wraps
     def func_wrapper(*args, **kwargs):
@@ -43,7 +43,6 @@ def db_try_catch(func):
 #  NOTE:  sqlite does not enforce types, i.e. you can insert an integer value into a text column!
 #  NOTE:  sqlite a column with type Integer primary key is an alias for the rowid,
 #  hence use of lastrowid below in saveLink and saveUser
-#  TODO:  Refactor to check data types prior to insertion.
 class DataAccessClass:
     """ This class sets up a database connection and contains methods
     for reading and writing to the database and closing the connection.

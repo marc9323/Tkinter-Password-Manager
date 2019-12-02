@@ -6,7 +6,7 @@ CIS 2531 - Introduction to Python Programming
 Term Project - Tkinter Password Manager Application
 
 Module: controller.py
-consists of the main controller and entry/exit point for the application.
+consists of the main Controller and entry/exit point for the application.
 """
 
 from dao import *

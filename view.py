@@ -6,8 +6,9 @@ CIS 2531 - Introduction to Python Programming
 Term Project - Tkinter Password Manager Application
 
 Module: view.py
-This file consists of the view module for the application.
-Extends Frame.  Here the components are assembled.
+This file consists of the view module for the application and
+extends Frame.  Here the components are assembled on placed on the
+single frame.
 """
 
 from dao import *
@@ -20,10 +21,11 @@ class View(Frame):
         Frame.__init__(self, master)
         self.model = model
         #  assemble the view components and place them in the main view frame
+        #  bind commands for gui functions
         self.menubar = Menu(master)
         self.menubar.add_command(label="Print Report")
-        self.menubar.add_command(label="Help", command=self.displayDocumentation)
-        self.menubar.add_command(label="Exit", command=master.quit)
+        self.menubar.add_command(label="Help")
+        self.menubar.add_command(label="Exit")
         self.currentUserLabel = Label(self.master, text='Web Accounts For: ')
         self.master = master
         self.loginFrame = LoginFrame(self)
@@ -31,18 +33,22 @@ class View(Frame):
         self.siteListBoxFrame = SiteListBoxFrame(self)
         self.addSiteFrame = AddSiteFrame(self)
         self.currentUserLabel = Label(self, text="Accounts for User:", fg='red', bg='black')
-
         self.master.config(menu=self.menubar)
+
+        #  assemble using grid manager
         self.currentUserLabel.grid(row=0, column=0, pady=10, padx=15)
         self.loginFrame.grid(row=1, column=0, sticky=NW, pady=10, padx=15)
         self.registerFrame.grid(row=1, column=1, sticky=NE, pady=10, padx=15)
         self.addSiteFrame.grid(row=2, column=0, pady=10, padx=15)
         self.siteListBoxFrame.grid(row=2, column=1, sticky=N, pady=10, padx=15)
 
+    #  populates the listbox of web accounts using data from the model.links
     def populateSiteListBox(self):
         for item in self.model.links:
             self.siteListBoxFrame.siteListBox.insert(END, item.site_name)
 
+    #  populates the form for entering/reading web account data based on data
+    #  passed from controller -- refactor to use the model
     def populateSiteEntryForm(self, linkData):
         self.clearForm()
         self.addSiteFrame.username.set(linkData.username)
@@ -53,6 +59,8 @@ class View(Frame):
         self.addSiteFrame.password.set(linkData.password)
         self.addSiteFrame.note.set(linkData.note)
 
+    #  fetches data entered by the user for a web account
+    #  and returns it in the form of a LinkTuple
     def getLinkDataFromForm(self):
         siteName = self.addSiteFrame.siteName.get().strip()
         url = self.addSiteFrame.url.get().strip()
@@ -67,9 +75,11 @@ class View(Frame):
                          security=security, email=email)
         return link
 
+    #  set the current user label based on the model.principal.email
     def setCurrentUserLabel(self):
         self.currentUserLabel['text'] = f"Web Accounts For: {self.model.principal.email}"
 
+    #  clears the form containing web account data
     def clearForm(self):
         self.addSiteFrame.siteUsernameEntry.delete(0, END)
         self.addSiteFrame.siteNameEntry.delete(0, END)
@@ -79,14 +89,17 @@ class View(Frame):
         self.addSiteFrame.passwordEntry.delete(0, END)
         self.addSiteFrame.noteEntry.delete(0, END)
 
-    def clearListBox(self):  ### update???
+    #  clears the list box containing web account names
+    def clearListBox(self):
         self.siteListBoxFrame.siteListBox.delete(0, END)
         self.update()
 
+    #  clears the login box fields
     def clearLogin(self):
         self.loginFrame.usernameEntry.delete(0, END)
         self.loginFrame.passwordEntry.delete(0, END)
 
+    #  change color of fields to provide user feedback
     def setLoginFieldsRed(self):
         self.loginFrame.usernameEntry['bg'] = 'red'
         self.loginFrame.passwordEntry['bg'] = 'red'
@@ -101,13 +114,9 @@ class View(Frame):
     def setRegisterUsernameWhite(self):
         self.registerFrame.usernameEntry['bg'] = 'white'
 
+    #  unused
     def showInfoMessageBox(self, title, info):
         messagebox.showinfo(title, info)
-
-    def displayDocumentation(self):
-        print("Documentation window should be displayed")
-
-#  add clear fields methods to view. remove from controller.
 
 
 

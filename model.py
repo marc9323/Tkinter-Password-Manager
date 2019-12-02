@@ -10,7 +10,7 @@ LinkTuple = namedtuple('Link', ['id', 'user_id', 'site_name', 'username', 'url',
 
 class Model:
     """
-    Data Model for the Tkinter Password Manager Application Project
+    Data Model for the Tkinter Password Manager Application Project.
     links = list of links for the current user
     currentEntryId = tracks the current entry for the site list box
     principal = current user

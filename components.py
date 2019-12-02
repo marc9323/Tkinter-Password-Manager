@@ -19,18 +19,25 @@ from tkinter import *
 
 
 class RegisterFrame(LabelFrame):
+    """
+    RegisterFrame class assembles into a LabelFrame the fields for
+    user registration.
+    """
     def __init__(self, master):
         LabelFrame.__init__(self, master, text='Register as a New User')
+
+        #  StringVar to hold username and password
         self.username = StringVar()
         self.password = StringVar()
 
-        self.widgetLabel = Label
+        #  Label, Entry, Button
         self.usernameLabel = Label(self, text="Username: ")
         self.passwordLabel = Label(self, text="Password: ")
         self.usernameEntry = Entry(self, textvariable=self.username, width=30)
         self.passwordEntry = Entry(self, textvariable=self.password, width=30)
         self.registerButton = Button(self, text='Register')
 
+        #  assemble using grid manager
         self.usernameLabel.grid(row=0, column=0)
         self.usernameEntry.grid(row=0, column=1)
         self.passwordLabel.grid(row=1, column=0)
@@ -39,23 +46,27 @@ class RegisterFrame(LabelFrame):
 
 
 class LoginFrame(LabelFrame):
+    """
+    LoginFrame class holds the login fields for user login.
+    """
     def __init__(self, master):
         LabelFrame.__init__(self, master, text="Login")
-        # self.master = master
+
+        # Int and String vars
         self.checkVar = IntVar()
         self.username = StringVar()
         self.password = StringVar()
 
+        #  labels, checkbutton,  entries, and button
         self.usernameLabel = Label(self, text="Username: ")
         self.passwordLabel = Label(self, text="Password: ")
         self.saveLoginCheckbutton = Checkbutton(self, variable=self.checkVar,
                                            text="Save Login")
-
         self.usernameEntry = Entry(self, textvariable=self.username, width=30)
         self.passwordEntry = Entry(self, textvariable=self.password, width=30)
-
         self.loginButton = Button(self, text="Login")
 
+        #  assemble using grid manager
         self.usernameLabel.grid(row=0, column=0)
         self.usernameEntry.grid(row=0, column=1)
         self.passwordLabel.grid(row=1, column=0)
@@ -66,27 +77,38 @@ class LoginFrame(LabelFrame):
 
 
 class SiteListBoxFrame(LabelFrame):
+    """
+    SiteListBoxFrame holds the listbox containing the names of the users
+    web accounts and a scrollbar.
+    """
     def __init__(self, master):
         LabelFrame.__init__(self, master, text="Active Accounts", padx=15)
-        # self.master = master
+
+        #  listbox with sunken border
         self.siteListBox = Listbox(self, width=25)
         self.siteListBox.config(border=2, relief='sunken')
 
-
+        #  scrollbar
         self.listScroll = Scrollbar(self, orient=VERTICAL,
                                command=self.siteListBox.yview)
-        self.listScroll.grid(row=0, column=1, sticky='nsw', rowspan=3)
-        self.siteListBox.grid(row=0, column=0, rowspan=2, sticky='nsew')
         self.siteListBox['yscrollcommand'] = self.listScroll.set
 
+        #  button
         self.siteListBoxDeleteButton = Button(self, text='Delete Entry')
+
+        #  assemble using grid manager
+        self.listScroll.grid(row=0, column=1, sticky='nsw', rowspan=3)
+        self.siteListBox.grid(row=0, column=0, rowspan=2, sticky='nsew')
         self.siteListBoxDeleteButton.grid(row=2, column=0, sticky=W, pady=10, padx=25)
 
 
 class AddSiteFrame(LabelFrame):
+    """
+    AddSiteFrame class holds the fields for entering web account data and password
+    """
     def __init__(self, master):
         LabelFrame.__init__(self, master, text="Store Additional Passwords:")
-        # self.master = master
+        # StringVars
         self.username = StringVar()
         self.siteName = StringVar()
         self.url = StringVar()
@@ -94,6 +116,8 @@ class AddSiteFrame(LabelFrame):
         self.security = StringVar()
         self.password = StringVar()
         self.note = StringVar()
+
+        #  instantiate components
         self.siteNameLabel = Label(self, text="Account Name: ", justify=LEFT, anchor=E)
         self.siteNameEntry = Entry(self, width=45, textvariable=self.siteName)
         self.urlLabel = Label(self, text="Account Link: ", justify=LEFT, anchor=E)
@@ -113,6 +137,7 @@ class AddSiteFrame(LabelFrame):
         self.addEntryButton = Button(self, text="Add Entry")
         self.clearButton = Button(self, text="Clear Form")
 
+        #  assemble using grid manager
         self.siteNameLabel.grid(row=0, column=0, padx=3, pady=3)
         self.siteNameEntry.grid(row=0, column=1, sticky=EW,  padx=3, pady=3)
         self.urlLabel.grid(row=1, column=0,  padx=3, pady=3)
@@ -128,6 +153,7 @@ class AddSiteFrame(LabelFrame):
         self.noteLabel.grid(row=6, column=0,  padx=3, pady=3)
         self.noteEntry.grid(row=6, column=1, sticky=EW,  padx=3, pady=3)
 
+        #  buttonFrame holds update, add entry, and clear form buttons
         self.buttonFrame = Frame(self)
         self.updateEntryButton = Button(self.buttonFrame, text="Update Entry")
         self.addEntryButton = Button(self.buttonFrame, text="Add Entry")

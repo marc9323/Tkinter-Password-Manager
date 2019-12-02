@@ -11,7 +11,8 @@ user login and registration.  This class sets up
 an encryption context and holds methods for encrypting
 and verifying passwords.
 
-passlib does all the work for us.
+passlib basically does all the work for us as it provides
+encrypt and verify methods.
 """
 
 from passlib.context import CryptContext

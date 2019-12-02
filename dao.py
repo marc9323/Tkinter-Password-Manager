@@ -10,9 +10,7 @@ Model and Database/File access.
 Class includes functions for reading/writing users/links to the database
 and for reading the saved login from and writing a report to text files.
 """
-#---->  don't sort -- just use orderby?
 
-#  use decorators for exception handling:  https://dev.to/booterror/python-decorators-for-error-handling-50eb
 from sqlite3 import *
 from model import UserTuple, LinkTuple
 from encryption import Encryption

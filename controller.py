@@ -33,7 +33,6 @@ class Controller:
         #  use the DAO to set the principal (current user) and associated links
         #  since user has option of checking 'save login' the app will check for
         #  a saved login and open to that users accounts
-        # self.principal = self.dao.getLastUser()
         self.model.principal = self.dao.getLastUser()
         #  get all the links for the user
         self.model.links = self.dao.getLinks(self.model.principal.id)
@@ -73,7 +72,7 @@ class Controller:
         #  fields filled in properly so process login
         try:
             user = self.dao.getUserCheckPw(email, password)
-            # if user == False:  ## if not user
+            #  if False is returned login failed - password didn't match
             if not user:
                 messagebox.showwarning('Login Failed', 'Enter a valid password.')
                 self.view.setLoginFieldsRed()
@@ -83,11 +82,10 @@ class Controller:
             self.view.setLoginFieldsRed()
         else:
             #   now a new user is logged in, set the principal and get his links
-            #  is it already a UserTuple?
             self.model.principal = user
             #  fetch links by user id
             self.model.links = self.dao.getLinks(self.model.principal.id)
-            #  if save login box is checked, write data to file
+            #  if save login box is checked, write id to file
             if self.view.loginFrame.checkVar.get() == 1:
                 self.dao.saveLogin(self.model.principal.id)
             #  update gui
@@ -212,7 +210,7 @@ class Controller:
         self.view.clearListBox()
         self.view.populateSiteListBox()
 
-    #  populates the form for entering web accounts -- elim this
+    #  populates the form for entering web accounts
     def populateSiteEntryForm(self, linkData):
         self.view.populateSiteEntryForm(linkData)
 

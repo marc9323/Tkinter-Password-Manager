@@ -21,7 +21,6 @@ class View(Frame):
         Frame.__init__(self, master)
         self.model = model
         #  assemble the view components and place them in the main view frame
-        #  bind commands for gui functions
         self.menubar = Menu(master)
         self.menubar.add_command(label="Print Report")
         self.menubar.add_command(label="Help")

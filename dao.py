@@ -18,10 +18,7 @@ from datetime import date
 from tkinter import messagebox
 
 #  named constant for config file
-#  this file simply stores a user id #
-CONFIG_FILE = 'pwm-config.txt'
-#  named constant for database file which holds users and links (web accounts)
-DATABASE_FILE = 'pwmdatabase.db'
+
 
 #  decorator will simplify exception handling for repetitive db transactions
 #  instead of a try, catch block in each function, use decorator
@@ -36,7 +33,8 @@ def db_try_catch(func):
         except Exception as ex:
             #  if exception thrown display it in messagebox and terminate application
             messagebox.showerror("DATABASE ERROR", f"Fatal Exception Thrown. \nApplication Terminating.\n{ex}")
-            return None
+            exit()
+            # return None
 
     return func_wrapper
 
@@ -49,12 +47,21 @@ class DataAccessClass:
     It also contains methods for reading/writing to the config file which
     stores last saved login user id and for generating a report containing
     all of the web accounts data for a single user"""
+
+    # class constants
+    #  this file simply stores a user id #
+    CONFIG_FILE = 'pwm-config.txt'
+    #  database file which holds users and links (web accounts)
+    DATABASE_FILE = 'pwmdatabase.db'
+    #  used for generating a text file containing all the accounts for the user
+    USER_REPORT = 'password-report.txt'
+
     def __init__(self):
         #  gets a reference to class with passlib encryption methods
         self.encryption = Encryption()
         try:
             #  connect, get db cursor
-            self.conn = connect(DATABASE_FILE)
+            self.conn = connect(DataAccessClass.DATABASE_FILE)
             #  cursor is a generator, a type of iterable that generates next value each time used.
             self.cursor = self.conn.cursor()
         except Error as exc:
@@ -81,14 +88,14 @@ class DataAccessClass:
     #  saves the id of last user if save login box is checked
     @db_try_catch
     def saveLogin(self, userId):
-        with open(CONFIG_FILE, 'w') as config:
+        with open(DataAccessClass.CONFIG_FILE, 'w') as config:
             config.write(str(userId))
             config.close()
 
     #  retrieves the id of the last saved user from config file
     @db_try_catch
     def getLastUserIdFromFile(self):
-        with open(CONFIG_FILE, 'r') as config:
+        with open(DataAccessClass.CONFIG_FILE, 'r') as config:
             user_id = config.readline().rstrip('/n')
             config.close()
         return user_id
@@ -131,9 +138,7 @@ class DataAccessClass:
         sql = f"SELECT * FROM links WHERE user_id = ?"
         links = self.cursor.execute(sql, (userId, ))
         links = self.cursor.fetchall()
-        #  loop through and cast each link item to LinkTuple
-        #  and store all in a list, fetchall does return a list of tuples but
-        #  we want to work with LinkTuples
+        #  use list comprehension to cast to LinkTuple
         links = [LinkTuple(*item) for item in links]
         return links
 
@@ -145,7 +150,6 @@ class DataAccessClass:
         self.cursor.execute(sql, (sitename, ))
         link = self.cursor.fetchone()
         link = LinkTuple(*link)
-        print("getLinkBySiteName link id: ", link.id)
         return link
 
     #  delete a link
@@ -159,7 +163,6 @@ class DataAccessClass:
     #  update a link
     @db_try_catch
     def updateLink(self, link):
-        print("updateLink link.id == ", link.id)
         sql = f"UPDATE links SET user_id = ?, site_name = ?," \
               f" username = ?, url = ?, note = ?, password = ?, security = ?," \
               f"email = ? WHERE id = ?"
@@ -202,7 +205,7 @@ class DataAccessClass:
         #  parse it to month day year
         monthDayYear = today.strftime("%B %d, %Y")
         # open file 'password-report.txt', write data, close file
-        with open('password-report.txt', 'w') as report:
+        with open(DataAccessClass.USER_REPORT, 'w') as report:
             report.write(f"Web Account Data Report\nPrepared: {monthDayYear}\nFor User: {principalEmail}".upper())
             report.write('\n')
             report.write("=" * 40)

@@ -37,11 +37,12 @@ password: samplepassword
 Potential Problems/unimplemented features:
 1.)  It isn't really secure at this point - user passwords are encrypted but I haven't yet
 implemented encryption for web account passwords.  Also the saved login has a
-security flaw - the last saved user is always loaded upon startup.  It would probably be best to
-eliminate this feature or just default to a sample user.
+security flaw - the last saved user is always loaded upon startup and someone could alter the config file.
+It would probably be best to eliminate this feature or just default to a sample user.
 2.)  If the user intends to update an entry and hits 'add entry' instead a duplicate entry will appear.
 The solution would be to a.) check for duplicates  b.)  update sql to require unique entries so that
 a sql exception would be thrown upon attempt to add duplicate.
-3.)  I'm not sure I got the exception handling correct.  I used a decorator instead of multiple try blocks in dao.
-4.)  The GUI should be updated to allow resizing.
-5.)  onListBoxSelect in controller.py throws IndexError sporadically when fields are cleared using backspace.
+3.)  The GUI should be updated to allow resizing.
+4.)  onListBoxSelect in controller.py throws IndexError sporadically when fields are cleared using backspace.
+5.)  I used the sqlite shell inside PyCharm to create the database  -- Need to develop a way to initialize
+a fresh database on very first startup.

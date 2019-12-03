@@ -236,7 +236,7 @@ class Controller:
     def help(self):
         wb.open("pwm-help.html")
 
-    #  use a regular expression to test if an email address was entered
+    #  use a regular expression to test if a valid email address was entered
     def checkEmail(self, email):
         regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
         if re.search(regex, email):
@@ -245,7 +245,6 @@ class Controller:
 
     #  on exit close connection and destroy root
     def exit(self):
-        # self.model.dataAccess.closeConnection()
         self.dao.closeConnection()
         self.root.destroy()
 
@@ -259,18 +258,3 @@ class Controller:
 if __name__ == '__main__':
     Controller().run()
 
-
-#  check:  https://stackoverflow.com/questions/17597931/how-to-separate-view-and-controller-in-python-tkinter
-
-#  git@github.com:marc9323/Tkinter-Password-Manager.git
-#  echo "# Tkinter-Password-Manager" >> README.md
-# git init
-# git add README.md
-# git commit -m "first commit"
-# git remote add origin git@github.com:marc9323/Tkinter-Password-Manager.git
-# git push -u origin master
-#
-# …or push an existing repository from the command line
-#
-# git remote add origin git@github.com:marc9323/Tkinter-Password-Manager.git
-# git push -u origin master

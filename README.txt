@@ -4,8 +4,16 @@ CIS 2531 Introduction To Python Programming
 
 Tkinter Password/Web Account Data Manager:
 
-The app requires installation of passlib dependency for password encryption.
+This app allows multiple users sharing the same computer to store passwords and
+other data related to accounts on the web - basic CRUD functionality for
+web account data.
+
+It requires installation of passlib dependency for password encryption:
 'pip install passlib'
+
+Since the project includes several files plus the dependency passlib I've included
+the virtual environment (venv) in the zip archive so you can load the whole folder
+into pycharm as a project.
 
 Start the application by running controller.py.
 
@@ -19,13 +27,21 @@ ID for the last saved login is stored in pwm-config.txt
 The application includes a help screen you can access by hitting 'help' on the
 menubar.
 
-Since the project includes several files plus the dependency passlib I've included
-the virtual environment (venv) in the zip archive so you can load the whole folder
-into pycharm as a project.
-
 Some test users are already included in the database:
 user: marcholman9323@gmail.com
 password:  password
 
 user: codstudent@cod.edu
 password: samplepassword
+
+Potential Problems/unimplemented features:
+1.)  It isn't really secure at this point - user passwords are encrypted but I haven't yet
+implemented encryption for web account passwords.  Also the saved login has a
+security flaw - the last saved user is always loaded upon startup.  It would probably be best to
+eliminate this feature or just default to a sample user.
+2.)  If the user intends to update an entry and hits 'add entry' instead a duplicate entry will appear.
+The solution would be to a.) check for duplicates  b.)  update sql to require unique entries so that
+a sql exception would be thrown upon attempt to add duplicate.
+3.)  I'm not sure I got the exception handling correct.  I used a decorator instead of multiple try blocks in dao.
+4.)  The GUI should be updated to allow resizing.
+5.)  onListBoxSelect in controller.py throws IndexError sporadically when fields are cleared using backspace.

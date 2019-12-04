@@ -97,7 +97,8 @@ class SiteListBoxFrame(LabelFrame):
         self.siteListBoxDeleteButton = Button(self, text='Delete Entry')
 
         #  assemble using grid manager
-        self.listScroll.grid(row=0, column=1, sticky='nsw', rowspan=3)
+        self.listScroll.grid(row=0, column=1, sticky='nsw', rowspan=2)
+        self.siteListBox.config(border=2, relief='sunken')
         self.siteListBox.grid(row=0, column=0, rowspan=2, sticky='nsew')
         self.siteListBoxDeleteButton.grid(row=2, column=0, sticky=W, pady=10, padx=25)
 

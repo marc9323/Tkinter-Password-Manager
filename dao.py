@@ -17,9 +17,6 @@ from encryption import Encryption
 from datetime import date
 from tkinter import messagebox
 
-#  named constant for config file
-
-
 #  decorator will simplify exception handling for repetitive db transactions
 #  instead of a try, catch block in each function, use decorator
 #  A database error will cause the application to shut down after notifying the user

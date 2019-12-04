@@ -17,23 +17,6 @@ from encryption import Encryption
 from datetime import date
 from tkinter import messagebox
 
-#  decorator will simplify exception handling for repetitive db transactions
-#  instead of a try, catch block in each function, use decorator
-#  A database error will cause the application to shut down after notifying the user
-#  and displaying the error inside tkinter messagebox
-def db_try_catch(func):
-    #  func is the function the decorator wraps
-    def func_wrapper(*args, **kwargs):
-        try:
-            #  try returning the function
-           return func(*args, **kwargs)
-        except Exception as ex:
-            #  if exception thrown display it in messagebox and terminate application
-            messagebox.showerror("DATABASE ERROR", f"Fatal Exception Thrown. \nApplication Terminating.\n{ex}")
-            exit()
-            # return None
-
-    return func_wrapper
 
 #  NOTE:  sqlite does not enforce types, i.e. you can insert an integer value into a text column!
 #  NOTE:  sqlite a column with type Integer primary key is an alias for the rowid,
@@ -70,7 +53,6 @@ class DataAccessClass:
 
     #  fetches the last user (saved login) from the database based on the
     #  stored user id
-    @db_try_catch
     def getLastUser(self):
         user_id = self.getLastUserIdFromFile()
         #  sql statement
@@ -83,14 +65,12 @@ class DataAccessClass:
         return user
 
     #  saves the id of last user if save login box is checked
-    @db_try_catch
     def saveLogin(self, userId):
         with open(DataAccessClass.CONFIG_FILE, 'w') as config:
             config.write(str(userId))
             config.close()
 
     #  retrieves the id of the last saved user from config file
-    @db_try_catch
     def getLastUserIdFromFile(self):
         with open(DataAccessClass.CONFIG_FILE, 'r') as config:
             user_id = config.readline().rstrip('/n')
@@ -98,7 +78,6 @@ class DataAccessClass:
         return user_id
 
     #  checks if a user with that email/username exists
-    @db_try_catch
     def userExists(self, username):
         #  '?' is query parameter
         sql = f'SELECT rowid FROM USERS WHERE email = ?'
@@ -112,7 +91,6 @@ class DataAccessClass:
         return True
 
     #  fetches a user and checks to see if the password passed is a match
-    @db_try_catch
     def getUserCheckPw(self, email, password):
         # get the user info by email
         sql = f'SELECT * FROM users WHERE email = ?'
@@ -130,7 +108,6 @@ class DataAccessClass:
             return False
 
     #  get all the links (web accounts) for a user by id
-    @db_try_catch
     def getLinks(self, userId):
         sql = f"SELECT * FROM links WHERE user_id = ?"
         links = self.cursor.execute(sql, (userId, ))
@@ -140,7 +117,6 @@ class DataAccessClass:
         return links
 
     #  retrieve a link (web account) by name
-    @db_try_catch
     def getLinkBySiteName(self, sitename):
         # sitename must be unique for this to work
         sql = f"SELECT * FROM links WHERE site_name = ?"
@@ -150,7 +126,6 @@ class DataAccessClass:
         return link
 
     #  delete a link
-    @db_try_catch
     def deleteLink(self, linkId):
         sql = f"DELETE FROM links WHERE id=?"
         rowCount = self.cursor.execute(sql, (linkId, ))  #  don't need
@@ -158,7 +133,6 @@ class DataAccessClass:
         self.conn.commit()
 
     #  update a link
-    @db_try_catch
     def updateLink(self, link):
         sql = f"UPDATE links SET user_id = ?, site_name = ?," \
               f" username = ?, url = ?, note = ?, password = ?, security = ?," \
@@ -170,7 +144,6 @@ class DataAccessClass:
         self.conn.commit()
 
     #  save a link
-    @db_try_catch
     def saveLink(self, link, user_id):
         sql = f"INSERT INTO links(user_id, site_name, username, url, note, password, security, email)" \
               f"VALUES(?,?,?,?,?,?,?,?)"
@@ -182,7 +155,6 @@ class DataAccessClass:
         return lastRowId
 
     #  save a user after registration and return a UserTuple
-    @db_try_catch
     def saveUser(self, email, password):
         #  encrypt the password first
         encryptedPassword = self.encryption.encrypt_password(password)

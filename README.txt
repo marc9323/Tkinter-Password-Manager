@@ -34,6 +34,9 @@ password:  password
 user: codstudent@cod.edu
 password: samplepassword
 
+user:  cameljoe@hotmail.com
+password: password
+
 Potential Problems/unimplemented features:
 1.)  It isn't really secure at this point - user passwords are encrypted but I haven't yet
 implemented encryption for web account passwords.  Also the saved login has a
